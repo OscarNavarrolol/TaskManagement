@@ -30,6 +30,8 @@ public class ConnectionDB {
 
             // Establecer la conexión a la base de datos
             connection = DriverManager.getConnection(url, user, password);
+
+            JOptionPane.showMessageDialog(null, "Si sirve");
             
         } catch (SQLException | ClassNotFoundException e) {
             JOptionPane.showMessageDialog(null, e, "Error en la conexión a la base de datos: " + e.getMessage(), JOptionPane.ERROR_MESSAGE);

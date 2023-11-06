@@ -4,7 +4,10 @@ import com.formdev.flatlaf.intellijthemes.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+<<<<<<< HEAD
 import java.text.ParseException;
+=======
+>>>>>>> 77d33a77eab50b6be70efa158d33af11da3e74dc
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -41,6 +44,7 @@ public class Principal extends javax.swing.JFrame {
         DateTask dateTask = new DateTask();
         tableModel = (DefaultTableModel) tableTask.getModel(); 
 
+
         txtIDTask.setEditable(false);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
@@ -51,6 +55,17 @@ public class Principal extends javax.swing.JFrame {
     showSelectedTaskDetails();
 });
 
+        
+        tableModel = new DefaultTableModel();
+        tableTask.setModel(tableModel);
+        tableModel.addColumn("ID");
+        tableModel.addColumn("NAME");
+        tableModel.addColumn("DESCRIPTION");
+        tableModel.addColumn("DATE");
+        tableModel.addColumn("PRIOTITY");
+        tableModel.addColumn("COMPLETE");
+        
+        loadAllTasks();
 
         
     }
@@ -394,7 +409,7 @@ public class Principal extends javax.swing.JFrame {
         
         tableModel.addRow(new Object[]{id, task_name,task_description,task_due_date,task_priority,task_status});
 //        dateTask.showDetails(tableTask);
-    }//GEN-LAST:event_btCreateActionPerformed
+    }                                        
 }
    private void showSelectedTaskDetails() {
     int selectedRow = tableTask.getSelectedRow();
@@ -426,6 +441,18 @@ public class Principal extends javax.swing.JFrame {
     }
 }
 
+
+        loadAllTasks();
+    }//GEN-LAST:event_btCreateActionPerformed
+}
+    private void loadAllTasks() {
+        DateTask dateTask = new DateTask();
+        List<DateTask> tasks = dateTask.getAllTasks();
+        for (DateTask task : tasks) {
+            tableModel.addRow(new Object[]{task.getId(), task.getTask_name(), task.getTask_description(), task.getTask_due_date(), task.getTask_priority(), task.getTask_status()});
+        }
+    }
+    
 
     /**
      * @param args the command line arguments

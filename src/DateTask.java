@@ -14,6 +14,9 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
+import java.util.Scanner;
+import javax.swing.JOptionPane;
+
 
 
 
@@ -103,6 +106,8 @@ public class DateTask {
     Connection connection = ConnectionDB.getConnectionBD();
     try {
         PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
         preparedStatement.setString(1, task_name);
         preparedStatement.setString(2, task_description);
         preparedStatement.setString(3, task_due_date);
@@ -193,9 +198,44 @@ public class DateTask {
     return null;
 }
 
+        if (cantRegistres > 0) {
+            JOptionPane.showMessageDialog(null, "Insertado");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo");
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        // Maneja la excepción según sea necesario.
+    }
+}
 
+    public List<DateTask> getAllTasks() {
+    List<DateTask> tasks = new ArrayList<>();
+    String sql = "SELECT * FROM tasks";
 
+    Connection connection = ConnectionDB.getConnectionBD();
+    try {
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        ResultSet resultSet = preparedStatement.executeQuery();
 
+        while (resultSet.next()) {
+            int id = resultSet.getInt("id");
+            String taskName = resultSet.getString("task_name");
+            String taskDescription = resultSet.getString("task_description");
+            String taskDueDate = resultSet.getString("task_due_date");
+            int taskPriority = resultSet.getInt("task_priority");
+            String taskStatus = resultSet.getString("task_status");
+
+            DateTask task = new DateTask(id, taskName, taskDescription, taskDueDate, taskPriority, taskStatus);
+            tasks.add(task);
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        // Maneja la excepción según sea necesario.
+    } 
+
+    return tasks;
+}
         
     }
 
