@@ -5,17 +5,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.sql.Statement; // Agrega esta importación
 import java.util.Scanner;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
-import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
-
-import java.util.Scanner;
-import javax.swing.JOptionPane;
 
 
 
@@ -99,34 +94,28 @@ public class DateTask {
     }
     
     public void insertRecord(String task_name, String task_description, String task_due_date, int task_priority, String task_status) {
-        
-    Principal pin = new Principal();
     String sql = "INSERT INTO tasks (task_name, task_description, task_due_date, task_priority, task_status) VALUES (?, ?, ?, ?, ?)";
-
-    Connection connection = ConnectionDB.getConnectionBD();
-    try {
-        PreparedStatement preparedStatement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    
+    try (Connection connection = ConnectionDB.getConnectionBD();
+         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
         preparedStatement.setString(1, task_name);
         preparedStatement.setString(2, task_description);
         preparedStatement.setString(3, task_due_date);
         preparedStatement.setInt(4, task_priority);
         preparedStatement.setString(5, task_status);
 
-        int cantRegistres = preparedStatement.executeUpdate();
+        int cantRegistros = preparedStatement.executeUpdate();
 
-        if (cantRegistres > 0) {                
-                JOptionPane.showMessageDialog(null, "Insertado");
-            
+        if (cantRegistros > 0) {
+            JOptionPane.showMessageDialog(null, "Insertado");
         } else {
-            JOptionPane.showMessageDialog(null, "No se pudo insertar el registro");
+            JOptionPane.showMessageDialog(null, "No se pudo insertar");
         }
     } catch (Exception e) {
         e.printStackTrace();
+        // Maneja la excepción según sea necesario.
     }
-}
-
+    }
     public void showDetails(JTable tableTask){
         ConnectionDB conectar = new ConnectionDB();
         DefaultTableModel modeloBas = new DefaultTableModel();
@@ -174,6 +163,9 @@ public class DateTask {
         }
     
     }
+        
+    
+
     public DateTask getTaskDetails(int taskId) {
     String sql = "SELECT * FROM tasks WHERE id = ?";
 
@@ -198,44 +190,16 @@ public class DateTask {
     return null;
 }
 
-    if (cantRegistres > 0) {
-        JOptionPane.showMessageDialog(null, "Insertado");
-    } else {
-        JOptionPane.showMessageDialog(null, "No se pudo");
+        
     }
-     catch (Exception e) {
-        e.printStackTrace();
-        // Maneja la excepción según sea necesario.
-    }
-}
 
-    public List<DateTask> getAllTasks() {
-    List<DateTask> tasks = new ArrayList<>();
-    String sql = "SELECT * FROM tasks";
 
-    Connection connection = ConnectionDB.getConnectionBD();
-    try {
-        PreparedStatement preparedStatement = connection.prepareStatement(sql);
-        ResultSet resultSet = preparedStatement.executeQuery();
 
-        while (resultSet.next()) {
-            int id = resultSet.getInt("id");
-            String taskName = resultSet.getString("task_name");
-            String taskDescription = resultSet.getString("task_description");
-            String taskDueDate = resultSet.getString("task_due_date");
-            int taskPriority = resultSet.getInt("task_priority");
-            String taskStatus = resultSet.getString("task_status");
 
-            DateTask task = new DateTask(id, taskName, taskDescription, taskDueDate, taskPriority, taskStatus);
-            tasks.add(task);
-        }
-    } catch (Exception e) {
-        e.printStackTrace();
-        // Maneja la excepción según sea necesario.
-    } 
-
-    return tasks;
-}
-      
+        
+    
+    
+    
+    
 
     
