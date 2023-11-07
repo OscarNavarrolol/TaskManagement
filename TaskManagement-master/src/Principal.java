@@ -44,6 +44,8 @@ public class Principal extends javax.swing.JFrame {
         txtIDTask.setEditable(false);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        tableModel = new DefaultTableModel();
+        tableTask.setModel(tableModel);
         dateTask.showDetails(tableTask);
         tableTask.getSelectionModel().addListSelectionListener(e -> {
     showSelectedTaskDetails();
@@ -390,7 +392,7 @@ public class Principal extends javax.swing.JFrame {
         dateTask.insertRecord(task_name, task_description, task_due_date, task_priority, task_status);
         
         tableModel.addRow(new Object[]{id, task_name,task_description,task_due_date,task_priority,task_status});
-
+        dateTask.showDetails(tableTask);
     }//GEN-LAST:event_btCreateActionPerformed
 }
     private void showSelectedTaskDetails() {
