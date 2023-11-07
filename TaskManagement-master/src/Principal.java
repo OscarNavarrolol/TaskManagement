@@ -47,10 +47,13 @@ public class Principal extends javax.swing.JFrame {
         tableModel = new DefaultTableModel();
         tableTask.setModel(tableModel);
         dateTask.showDetails(tableTask);
+//        tableTask.getSelectionModel().addListSelectionListener(e -> {
+//        showSelectedTaskDetails();});
         tableTask.getSelectionModel().addListSelectionListener(e -> {
-    showSelectedTaskDetails();
-    });
-
+        if (!e.getValueIsAdjusting()) { // Evita eventos múltiples 
+        showSelectedTaskDetails();
+    }
+});
         
     }
 
@@ -76,7 +79,6 @@ public class Principal extends javax.swing.JFrame {
         jradYes = new javax.swing.JRadioButton();
         jradNot = new javax.swing.JRadioButton();
         btCreate = new javax.swing.JButton();
-        btModify = new javax.swing.JButton();
         btDelete = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         txtIDTask = new javax.swing.JTextField();
@@ -85,6 +87,7 @@ public class Principal extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        btModify = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -189,15 +192,15 @@ public class Principal extends javax.swing.JFrame {
             }
         });
 
-        btModify.setBackground(new java.awt.Color(153, 214, 156));
-        btModify.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
-        btModify.setForeground(new java.awt.Color(0, 0, 0));
-        btModify.setText("Modify");
-
         btDelete.setBackground(new java.awt.Color(153, 214, 156));
         btDelete.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
         btDelete.setForeground(new java.awt.Color(0, 0, 0));
         btDelete.setText("Delete");
+        btDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btDeleteActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Roboto Light", 1, 15)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 0, 0));
@@ -231,21 +234,30 @@ public class Principal extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(0, 0, 0));
         jLabel7.setText("Complete");
 
+        btModify.setBackground(new java.awt.Color(153, 214, 156));
+        btModify.setFont(new java.awt.Font("Verdana", 1, 14)); // NOI18N
+        btModify.setForeground(new java.awt.Color(0, 0, 0));
+        btModify.setText("Modify");
+        btModify.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btModifyActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addComponent(btCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(49, 49, 49)
-                .addComponent(btModify, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
-                .addComponent(btDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(37, 37, 37))
-            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(52, 52, 52)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(btCreate, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btModify, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(54, 54, 54)
+                        .addComponent(btDelete, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(34, 34, 34))
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -260,7 +272,7 @@ public class Principal extends javax.swing.JFrame {
                             .addComponent(jLabel4)
                             .addComponent(jLabel6)
                             .addComponent(jLabel5))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 112, Short.MAX_VALUE)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jScrollPane2)
                             .addComponent(dateTaskTime, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -302,10 +314,10 @@ public class Principal extends javax.swing.JFrame {
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btCreate)
                     .addComponent(btModify)
-                    .addComponent(btDelete))
-                .addGap(14, 14, 14))
+                    .addComponent(btDelete)
+                    .addComponent(btCreate))
+                .addGap(36, 36, 36))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -394,19 +406,42 @@ public class Principal extends javax.swing.JFrame {
         tableModel.addRow(new Object[]{id, task_name,task_description,task_due_date,task_priority,task_status});
         dateTask.showDetails(tableTask);
     }//GEN-LAST:event_btCreateActionPerformed
-}
+    }
+      
+    private void btModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btModifyActionPerformed
+        int taskId = Integer.parseInt(txtIDTask.getText());
+        String taskName = txtNameTask.getText();
+        String taskDescription = jtxtDescriptionTask.getText();
+        String taskDueDate = new SimpleDateFormat("dd/MM/yyyy").format(dateTaskTime.getDate());
+        int taskPriority = jcomboPriority.getSelectedIndex();
+        String taskStatus = jradYes.isSelected() ? "YES" : "NOT";
+
+        DateTask date = new DateTask();
+        date.updateTask(taskId, taskName, taskDescription, taskDueDate, taskPriority, taskStatus);
+        date.showDetails(tableTask);
+    }//GEN-LAST:event_btModifyActionPerformed
+
+    private void btDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteActionPerformed
+        int taskId = Integer.parseInt(txtIDTask.getText());
+
+        DateTask date = new DateTask();
+        date.deleteTask(taskId);
+        date.showDetails(tableTask);
+    }//GEN-LAST:event_btDeleteActionPerformed
+      
     private void showSelectedTaskDetails() {
     int selectedRow = tableTask.getSelectedRow();
     if (selectedRow >= 0) {
         int taskId = Integer.parseInt(tableTask.getValueAt(selectedRow, 0).toString());
         DateTask task = new DateTask().getTaskDetails(taskId);
+        txtIDTask.setText(String.valueOf(taskId));
 
         if (task != null) {
-            txtIDTask.setText(String.valueOf(task.getId()));
+//            txtIDTask.setText(String.valueOf(task.getId()));
             txtNameTask.setText(task.getTask_name());
             jtxtDescriptionTask.setText(task.getTask_description());
 
-            // Convertir la fecha de String a Date y establecerla en JDateChooser
+//             Convertir la fecha de String a Date y establecerla en JDateChooser
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             try {
                 Date dueDate = dateFormat.parse(task.getTask_due_date());
@@ -421,25 +456,22 @@ public class Principal extends javax.swing.JFrame {
             } else if ("NOT".equals(task.getTask_status())) {
                 jradNot.setSelected(true);
             }
+            
         }
     }
 }
-
-
-    
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
        
-    /*    try {
-            IntelliJTheme.setup( Principal.class.getResourceAsStream(
-    "Gradianto_midnight_blue.theme.json" ) );     
-        } catch (Exception e) {
-        }
-    */
-    FlatNordIJTheme.setup();
+    try {
+        FlatNordIJTheme.setup(); // o IntelliJTheme.setup(...)
+    } catch (Exception e) {
+        e.printStackTrace();
+        // Agregar aquí el manejo de la excepción
+    }
 
 
 // create UI here...

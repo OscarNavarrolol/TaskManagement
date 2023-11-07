@@ -1,4 +1,3 @@
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -190,7 +189,50 @@ public class DateTask {
     return null;
 }
 
-        
+    public void updateTask(int taskId, String newTaskName, String newTaskDescription, String newDueDate, int newTaskPriority, String newTaskStatus) {
+    String sql = "UPDATE tasks SET task_name = ?, task_description = ?, task_due_date = ?, task_priority = ?, task_status = ? WHERE id = ?";
+
+    try (Connection connection = ConnectionDB.getConnectionBD();
+         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        preparedStatement.setString(1, newTaskName);
+        preparedStatement.setString(2, newTaskDescription);
+        preparedStatement.setString(3, newDueDate);
+        preparedStatement.setInt(4, newTaskPriority);
+        preparedStatement.setString(5, newTaskStatus);
+        preparedStatement.setInt(6, taskId);
+
+        int rowsAffected = preparedStatement.executeUpdate();
+
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(null, "Actualización exitosa. Se actualizaron " + rowsAffected + " filas.");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo actualizar la tarea. Verifique el código de la tarea.");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error al actualizar la tarea. Error: " + e.getMessage());
+    }
+}
+    public void deleteTask(int taskId) {
+    String sql = "DELETE FROM tasks WHERE id = ?";
+
+    try (Connection connection = ConnectionDB.getConnectionBD();
+         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        preparedStatement.setInt(1, taskId);
+
+        int rowsAffected = preparedStatement.executeUpdate();
+
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(null, "Tarea eliminada exitosamente.");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo eliminar la tarea. Verifique el código de la tarea.");
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "Error al eliminar la tarea. Error: " + e.getMessage());
+    }
+    }
+    
     }
 
 
