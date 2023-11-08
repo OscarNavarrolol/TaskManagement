@@ -15,17 +15,17 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.table.DefaultTableModel;
 
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 
 /**
- *
- * @author USUARIO
+ * @author Oscar 
  */
+
 public class Principal extends javax.swing.JFrame {
+    // Private instance variables to store task information
     private int id ;
     private String task_name ;
     private String task_description; 
@@ -34,30 +34,25 @@ public class Principal extends javax.swing.JFrame {
     private String task_status ;
     private DefaultTableModel tableModel;
 
-    
-    
     public Principal() {
+        // Initializes GUI components, gets a database connection, sets up the DateTask object,
+        // configures the JTable, and adds a list selection listener for the table.
         initComponents();
-//        ConnectionDB.getConnectionBD();
         ConnectionDB.getConnectionBD();
         DateTask dateTask = new DateTask();
-        txtIDTask.setEditable(false);
+        txtIDTask.setEditable(false); // 
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         tableModel = new DefaultTableModel();
         tableTask.setModel(tableModel);
         dateTask.showDetails(tableTask);
-//        tableTask.getSelectionModel().addListSelectionListener(e -> {
-//        showSelectedTaskDetails();});
         tableTask.getSelectionModel().addListSelectionListener(e -> {
-        if (!e.getValueIsAdjusting()) { // Evita eventos múltiples 
+        if (!e.getValueIsAdjusting()) {
         showSelectedTaskDetails();
     }
 });
         
     }
-
-    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -208,11 +203,6 @@ public class Principal extends javax.swing.JFrame {
 
         txtIDTask.setFont(new java.awt.Font("Roboto", 0, 12)); // NOI18N
         txtIDTask.setForeground(new java.awt.Color(255, 255, 255));
-        txtIDTask.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtIDTaskActionPerformed(evt);
-            }
-        });
 
         jLabel3.setFont(new java.awt.Font("Roboto Light", 1, 15)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 0, 0));
@@ -370,21 +360,21 @@ public class Principal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btExitActionPerformed
+        // Displays a message and exits the application
         JOptionPane.showMessageDialog(null, "Thank you for using");
         System.exit(0);
     }//GEN-LAST:event_btExitActionPerformed
 
-    private void txtIDTaskActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtIDTaskActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtIDTaskActionPerformed
-
     private void btCreateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btCreateActionPerformed
+        // Handles the creation of new tasks. Validates user input, formats data, inserts the task into the database,
+        // and adds it to the JTable.
+        
         if (txtNameTask.getText().isEmpty() ||jtxtDescriptionTask.getText().isEmpty() || 
         dateTaskTime.getDate() == null || (!jradYes.isSelected() && !jradNot.isSelected())) {
         JOptionPane.showMessageDialog(null, "Please input data in all the fields");
-        } else 
-        {
-//        id = Integer.parseInt(txtIDTask.getText()); 
+        } else { 
+        // Extracts task information from input fields
+        
         task_name = txtNameTask.getText();
         task_description = jtxtDescriptionTask.getText();
     
@@ -400,36 +390,48 @@ public class Principal extends javax.swing.JFrame {
             task_status = "NOT";
         }
         
+        // Creates a DateTask object and inserts the task into the database
         DateTask dateTask = new DateTask(id, task_name, task_description, task_due_date, task_priority, task_status);
         dateTask.insertRecord(task_name, task_description, task_due_date, task_priority, task_status);
         
+        // Adds the new task to the JTable and refreshes its contents
         tableModel.addRow(new Object[]{id, task_name,task_description,task_due_date,task_priority,task_status});
         dateTask.showDetails(tableTask);
     }//GEN-LAST:event_btCreateActionPerformed
     }
       
     private void btModifyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btModifyActionPerformed
+        
+        // Updates an existing task with new details entered by the user, then refreshes the JTable.
         int taskId = Integer.parseInt(txtIDTask.getText());
         String taskName = txtNameTask.getText();
         String taskDescription = jtxtDescriptionTask.getText();
         String taskDueDate = new SimpleDateFormat("dd/MM/yyyy").format(dateTaskTime.getDate());
         int taskPriority = jcomboPriority.getSelectedIndex();
         String taskStatus = jradYes.isSelected() ? "YES" : "NOT";
-
+        
+        // Creates a DateTask object and updates the task details in the database
         DateTask date = new DateTask();
+        
+        // Refreshes the JTable to reflect the changes        
         date.updateTask(taskId, taskName, taskDescription, taskDueDate, taskPriority, taskStatus);
         date.showDetails(tableTask);
     }//GEN-LAST:event_btModifyActionPerformed
 
     private void btDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btDeleteActionPerformed
+        // Deletes a selected task and updates the JTable to reflect the changes.
         int taskId = Integer.parseInt(txtIDTask.getText());
-
+        
+        // Creates a DateTask object and deletes the selected task
         DateTask date = new DateTask();
         date.deleteTask(taskId);
+        // Refreshes the JTable to reflect the changes
         date.showDetails(tableTask);
     }//GEN-LAST:event_btDeleteActionPerformed
       
     private void showSelectedTaskDetails() {
+        
+    // Populates input fields with the details of a selected task when a row in the JTable is selected.
     int selectedRow = tableTask.getSelectedRow();
     if (selectedRow >= 0) {
         int taskId = Integer.parseInt(tableTask.getValueAt(selectedRow, 0).toString());
@@ -437,11 +439,10 @@ public class Principal extends javax.swing.JFrame {
         txtIDTask.setText(String.valueOf(taskId));
 
         if (task != null) {
-//            txtIDTask.setText(String.valueOf(task.getId()));
             txtNameTask.setText(task.getTask_name());
             jtxtDescriptionTask.setText(task.getTask_description());
 
-//             Convertir la fecha de String a Date y establecerla en JDateChooser
+            // Convert the date from String to Date and set it in JDateChooser
             SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
             try {
                 Date dueDate = dateFormat.parse(task.getTask_due_date());
@@ -461,19 +462,14 @@ public class Principal extends javax.swing.JFrame {
     }
 }
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
+    // Sets up the application, applies a theme, and catches any exceptions that may occur during the theme setup.
        
     try {
         FlatNordIJTheme.setup(); // o IntelliJTheme.setup(...)
     } catch (Exception e) {
-        e.printStackTrace();
-        // Agregar aquí el manejo de la excepción
+        e.printStackTrace();   
     }
-
-
 // create UI here...
 
         //</editor-fold>

@@ -11,18 +11,13 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.table.TableRowSorter;
 
-
-
-
-
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 
 /**
- *
- * @author USUARIO
+ * @author Oscar 
  */
 public class DateTask {
     private int id ;
@@ -34,7 +29,8 @@ public class DateTask {
 
     public DateTask() {
     }
-
+    
+    // Constructor to initialize the DateTask object with details
     public DateTask(int id, String task_name, String task_description, String task_due_date, int task_priority, String task_status) {
         this.id = id;
         this.task_name = task_name;
@@ -43,6 +39,9 @@ public class DateTask {
         this.task_priority = task_priority;
         this.task_status = task_status;
     }
+    
+    // Getter and Setter methods for private fields
+    // Getters return the values, and setters set the values
 
     public String getTask_status() {
         return task_status;
@@ -92,9 +91,12 @@ public class DateTask {
         this.task_priority = task_priority;
     }
     
+    // Method to insert a new task record into a database
     public void insertRecord(String task_name, String task_description, String task_due_date, int task_priority, String task_status) {
-    String sql = "INSERT INTO tasks (task_name, task_description, task_due_date, task_priority, task_status) VALUES (?, ?, ?, ?, ?)";
     
+    // SQL query to insert a new task record    
+    String sql = "INSERT INTO tasks (task_name, task_description, task_due_date, task_priority, task_status) VALUES (?, ?, ?, ?, ?)";
+    // code to execute SQL query, handle success or failure
     try (Connection connection = ConnectionDB.getConnectionBD();
          PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
         preparedStatement.setString(1, task_name);
@@ -106,16 +108,19 @@ public class DateTask {
         int cantRegistros = preparedStatement.executeUpdate();
 
         if (cantRegistros > 0) {
-            JOptionPane.showMessageDialog(null, "Insertado");
+            JOptionPane.showMessageDialog(null, "Inserted");
         } else {
-            JOptionPane.showMessageDialog(null, "No se pudo insertar");
+            JOptionPane.showMessageDialog(null, "Insertion failed");
         }
     } catch (Exception e) {
         e.printStackTrace();
         // Maneja la excepción según sea necesario.
     }
     }
+    
+    // Method to retrieve and display task details in a JTable
     public void showDetails(JTable tableTask){
+    //code to create a table model, retrieve data from the database, and display it in the JTable  
         ConnectionDB conectar = new ConnectionDB();
         DefaultTableModel modeloBas = new DefaultTableModel();
         
@@ -158,16 +163,16 @@ public class DateTask {
             tableTask.setModel(modeloBas);
 
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Se fue a la mierda."+e.getMessage());
+            JOptionPane.showMessageDialog(null, "error."+e.getMessage());
         }
-    
     }
         
-    
-
+    // Method to retrieve task details by task ID
     public DateTask getTaskDetails(int taskId) {
+    // SQL query to select a task by its ID    
     String sql = "SELECT * FROM tasks WHERE id = ?";
-
+    
+    //code to execute SQL query, retrieve task details, and return a DateTask object
     try (Connection connection = ConnectionDB.getConnectionBD();
          PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
         preparedStatement.setInt(1, taskId);
@@ -188,10 +193,11 @@ public class DateTask {
     }
     return null;
 }
-
+    // Method to update task details by task ID
     public void updateTask(int taskId, String newTaskName, String newTaskDescription, String newDueDate, int newTaskPriority, String newTaskStatus) {
+    // SQL query to update task details    
     String sql = "UPDATE tasks SET task_name = ?, task_description = ?, task_due_date = ?, task_priority = ?, task_status = ? WHERE id = ?";
-
+    //code to execute SQL query, handle success or failure
     try (Connection connection = ConnectionDB.getConnectionBD();
          PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
         preparedStatement.setString(1, newTaskName);
@@ -204,18 +210,21 @@ public class DateTask {
         int rowsAffected = preparedStatement.executeUpdate();
 
         if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(null, "Actualización exitosa. Se actualizaron " + rowsAffected + " filas.");
+            JOptionPane.showMessageDialog(null, "Update successful. " + rowsAffected + " row updates.");
         } else {
-            JOptionPane.showMessageDialog(null, "No se pudo actualizar la tarea. Verifique el código de la tarea.");
+            JOptionPane.showMessageDialog(null, "Task update failed. Please verify the task code.");
         }
     } catch (SQLException e) {
         e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Error al actualizar la tarea. Error: " + e.getMessage());
+        JOptionPane.showMessageDialog(null, "Error updating the task. Error:  " + e.getMessage());
     }
 }
+    // Method to delete a task by its ID
     public void deleteTask(int taskId) {
+    // SQL query to delete a task by its ID    
     String sql = "DELETE FROM tasks WHERE id = ?";
-
+    
+    // code to execute SQL query, handle success or failure
     try (Connection connection = ConnectionDB.getConnectionBD();
          PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
         preparedStatement.setInt(1, taskId);
@@ -223,13 +232,13 @@ public class DateTask {
         int rowsAffected = preparedStatement.executeUpdate();
 
         if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(null, "Tarea eliminada exitosamente.");
+            JOptionPane.showMessageDialog(null, "Task deleted successfully.");
         } else {
-            JOptionPane.showMessageDialog(null, "No se pudo eliminar la tarea. Verifique el código de la tarea.");
+            JOptionPane.showMessageDialog(null, "Unable to delete the task. Please verify the task code.");
         }
     } catch (SQLException e) {
         e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Error al eliminar la tarea. Error: " + e.getMessage());
+        JOptionPane.showMessageDialog(null, "Error deleting the task. Error:  " + e.getMessage());
     }
     }
     
