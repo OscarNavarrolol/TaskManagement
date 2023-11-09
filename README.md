@@ -43,8 +43,8 @@ public static Connection getConnectionBD() {
 
 ## Program screenshots
 
-![Screenshot of the application interface](https://imgur.com/gallery/5dtkSA7)
-![Screenshot of task insertion.](https://imgur.com/gallery/RSEBD53)
-![Screenshot of task update.](https://imgur.com/gallery/KT4KRQb)
-![Screenshot of task deletion.](https://imgur.com/gallery/4b1HdyS)
 
+[![Screenshot-2.png](https://i.postimg.cc/44vmNs5T/Screenshot-2.png)](https://postimg.cc/MXTW9kNs)
+[![Screenshot-1.png](https://i.postimg.cc/hvnvb5Kw/Screenshot-1.png)](https://postimg.cc/MMszztMb)
+[![Update.png](https://i.postimg.cc/fyvLHfLb/Update.png)](https://postimg.cc/hQfcvxVF)
+[![delete.png](https://i.postimg.cc/RFKqtBxK/delete.png)](https://postimg.cc/cg1sqPHL)
