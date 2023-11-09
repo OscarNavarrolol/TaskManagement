@@ -48,3 +48,10 @@ public static Connection getConnectionBD() {
 [![Screenshot-1.png](https://i.postimg.cc/hvnvb5Kw/Screenshot-1.png)](https://postimg.cc/MMszztMb)
 [![Update.png](https://i.postimg.cc/fyvLHfLb/Update.png)](https://postimg.cc/hQfcvxVF)
 [![delete.png](https://i.postimg.cc/RFKqtBxK/delete.png)](https://postimg.cc/cg1sqPHL)
+
+
+---
+
+Do you have any questions or suggestions? Please do not hesitate to contact me!
+
+[Contact Email](mailto:oscardnv123455@gmail.com) | [Contact Email](https://github.com/OscarNavarrolol)
