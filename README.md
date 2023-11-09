@@ -13,16 +13,16 @@ The project consists of several Java classes:
 
 - `ConnectionDB.java`:This class is responsible for establishing the connection to the MySQL database.
 
-## Cómo usar la aplicación
+## How to use the application
 
-1. Ejecuta la aplicación desde `Principal.java`.
-2. La aplicación te permite crear nuevas tareas, modificar tareas existentes y eliminar tareas.
-3. Las tareas se almacenan en una base de datos MySQL.
-4. Puedes ver la lista de tareas existentes en la tabla de la interfaz de usuario.
+1. Run the application from `Principal.java`.
+2. The application allows you to create new tasks, modify existing tasks, and delete tasks.
+3. The tasks are stored in a MySQL database.
+4. You can view the list of existing tasks in the user interface table.
 
-## Configuración
+## Configuration
 
-Asegúrate de configurar la conexión a la base de datos MySQL en la clase `ConnectionDB.java`. Reemplaza los valores de `db`, `url`, `user`, y `password` con tus propias credenciales de la base de datos.
+Make sure to configure the MySQL database connection in the class. `ConnectionDB.java`. Replace the values of `db`, `url`, `user`, and `password` With your own database credentials.
 
 ```java
 public static Connection getConnectionBD() {
@@ -36,15 +36,15 @@ public static Connection getConnectionBD() {
 }
 ```
 
-## Requisitos
-- Java Development Kit (JDK) instalado.
-- MySQL Server instalado y en ejecución.
+## Requirements
+- Java Development Kit (JDK) installed.
+- MySQL Server installed and running
 
 
-## Capturas de programa
+## Program screenshots
 
-![Captura de pantalla de la cara de la aplicación](https://imgur.com/gallery/5dtkSA7)
-![Captura de pantalla de inserción de tarea](https://imgur.com/gallery/RSEBD53)
-![Captura de pantalla de actualización de tarea](https://imgur.com/gallery/KT4KRQb)
-![Captura de pantalla de eliminación de tarea](https://imgur.com/gallery/4b1HdyS)
+![Screenshot of the application interface](https://imgur.com/gallery/5dtkSA7)
+![Screenshot of task insertion.](https://imgur.com/gallery/RSEBD53)
+![Screenshot of task update.](https://imgur.com/gallery/KT4KRQb)
+![Screenshot of task deletion.](https://imgur.com/gallery/4b1HdyS)
 
